@@ -3,19 +3,19 @@
 <head>
     <title>Chatbot</title>
     <script>
-        async function sendMessage() {
-            const userInput = document.getElementById("userInput").value;
-            const response = await fetch("/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: userInput })
-            });
-            const data = await response.json();
-            document.getElementById("chat").innerHTML +=
-                "<p><b>You:</b> " + userInput + "</p>" +
-                "<p><b>Bot:</b> " + data.reply + "</p>";
-            document.getElementById("userInput").value = "";
-        }
+    async function sendMessage() {
+        const userInput = document.getElementById("userInput").value;
+        const response = await fetch("/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: userInput })
+        });
+        const data = await response.json();
+        document.getElementById("chat").innerHTML +=
+            "<p><b>You:</b> " + data.user_message + "</p>" +
+            "<p><b>Bot:</b> " + data.bot_reply + "</p>";
+        document.getElementById("userInput").value = "";
+    }
     </script>
 </head>
 <body>
