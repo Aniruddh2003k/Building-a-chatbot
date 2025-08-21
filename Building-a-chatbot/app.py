@@ -1,11 +1,10 @@
 from flask import Flask, request, jsonify, render_template
-from openai import OpenAI
-import os
 from dotenv import load_dotenv
+import os
+from main import comp  # import chatbot logic
 
 load_dotenv()
 app = Flask(__name__)
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 @app.route("/")
 def home():
@@ -14,11 +13,8 @@ def home():
 @app.route("/chat", methods=["POST"])
 def chat():
     user_msg = request.json.get("message")
-    response = client.chat.completions.create(
-        model="gpt-4.1-mini",
-        messages=[{"role": "user", "content": user_msg}]
-    )
-    return jsonify({"reply": response.choices[0].message.content})
+    replies = comp(user_msg, outputs=1)
+    return jsonify({"reply": replies[0]})
 
 if __name__ == "__main__":
     app.run(debug=True)
