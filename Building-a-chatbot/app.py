@@ -14,7 +14,9 @@ def home():
 def chat():
     user_msg = request.json.get("message")
     replies = comp(user_msg, outputs=1)
-    return jsonify({"reply": replies[0]})
+    
+    response_obj = ChatResponse(user_message=user_msg, bot_reply=replies[0])
+    return jsonify(response_obj.to_dict())
 
 if __name__ == "__main__":
     app.run(debug=True)

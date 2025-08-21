@@ -17,3 +17,15 @@ def comp(prompt, MaxToken=500, outputs=1):
 
     output = [choice.message.content.strip() for choice in response.choices]
     return output
+
+class ChatResponse:
+    def __init__(self, user_message, bot_reply):
+        self.user_message = user_message
+        self.bot_reply = bot_reply
+    
+    def to_dict(self):
+        return {
+            "user_message": self.user_message,
+            "bot_reply": self.bot_reply
+        }
+
